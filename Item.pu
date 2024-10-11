@@ -1,0 +1,13 @@
+@startuml
+title Item
+Actor Player
+boundary MenuUI
+database ItemList
+control Item
+Player->MenuUI:所持アイテムフラグを送信
+MenuUI->ItemList: フラグに応じたItemを要求
+ItemList->MenuUI: Itemを返す
+MenuUI->Item:使用処理を要求
+Item->Player:アイテムの効果を適用
+MenuUI->Player : アイテム使用後のアイテムフラグの更新を要求
+@enduml

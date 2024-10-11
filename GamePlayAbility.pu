@@ -1,0 +1,13 @@
+@startuml
+title GamePlayAbility
+Actor Player
+control GamePlayAbility
+database AbilityList
+Player->AbilityList:Playerが持つアビリティのフラグからGamePlayTagを要求
+AbilityList->Player:GamePlayTagに応じたアビリティを返す
+Player->Player:キー入力とGamePlayTagのマッピング
+Player -> GamePlayAbility: GamePlayTagに応じたアビリティを発動
+GamePlayAbility -> GamePlayAbility: 発動可能かの判定
+
+
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+title States
+Actor Player
+boundary MenuUI
+database LevelStatsList
+
+Player->LevelStatsList:Playerのレベルからステータスを要求
+LevelStatsList->Player:ステータスを返す
+Player->Player:ステータス更新
+MenuUI->Player:ステータスを要求
+Player->MenuUI:ステータスを送信
+
+
+@enduml
