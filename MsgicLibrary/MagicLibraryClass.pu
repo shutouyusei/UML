@@ -1,17 +1,27 @@
 @startuml
 title class図
-class EquipmentMenu
+package MenuUI #DDDDDD
 {
-    -Character* Owner
-    -Equipment* Equipment
-    +void SelectEquipment
+    class EquipmentMenu
+    {
+        -Character* Owner
+        -Equipmentflag* Equipment
+        +void SelectEquipment()
+    }  
+    class ItemMenu
+    {
+        -Characer* Owner
+        -Itemflag[] Items
+        +void SelectItem()
+    }
 }
-
 class Character
 {
+    void AddDataTable(item)
+    //Item,EquipmentはDataTableで管理
 }
 EquipmentMenu - Stats.Equipmentclass
-EquipmentMenu - Character
+EquipmentMenu -up- Character
 package Stats #DDDDDD
 {
     struct FCharacterStats
@@ -34,25 +44,30 @@ package Stats #DDDDDD
 
     package "Equipmentclass" #DDDDDD {
         class Equipment
-        {   
-        +FCharacterStats Stats
-        +void Speciality()
+        {
+            //DataAssetにて管理
+            +FCharacterStats Stats
+            +EquipmentComponent
         }
         class Wepon
         {
-            +FCharacterStats Stats
-            +void Speciality()
         }
         class Accessory
         {
-            +FCharacterStats Stats
-            +void Speciality()
         }
         class Armor
+        {          
+        }
+        struct Equipmentflag
         {
-            +FCharacterStats Stats
+            +int Equipmentid
+            +EquipmentType type
+        }
+        class EquipmentComponent
+        {
             +void Speciality()
         }
+        EquipmentComponent -up-o Equipment
         Equipment -up-|> Wepon 
         Equipment -up-|> Accessory
         Equipment -up-|> Armor
@@ -65,6 +80,7 @@ package Stats #DDDDDD
             +FCharacterStats MaxStats
             +FCharacterStats CurrentStats
             +void CaluculateStats()
+            +void ApplyDamage(float dagmage)
         }
         class EquipmentComponent
         {
@@ -79,6 +95,7 @@ package Stats #DDDDDD
             +void UnEquip()
             +FCharacterStats* EquipmentStats(EquipmentType type)
         }
+
         EquipmentComponent -up-o StatsComponent
         StatsComponent -up-o Character
         FCharacterStats -up-o StatsComponent
@@ -90,8 +107,32 @@ package GamePlayAbility #DDDDDD
 {
     class Ability
     {
-        
+
     }
 }
+
+GamePlayAbility -left- Character
+
+package Item #DDDDDD
+{
+    class Item
+    {
+        //できればデータアセットで管理したい
+        +void Speciality()
+    }
+    struct itemflag
+    {
+        +int Itemid
+        +ItemType itemtype
+        +int Num
+    }
+    enum ItemType{
+        0:TOOLS
+        1:MATERIALS
+        2:KEYITEMS
+    }
+}
+Item -right- Character
+Item -down- MenuUI.ItemMenu
 
 @enduml
