@@ -1,5 +1,12 @@
 @startuml
 title class図
+class Character
+{
+    void AddDataTable(item)
+    //Item,EquipmentはDataTableで管理
+    FString[] AbilityTag
+}
+
 package MenuUI #DDDDDD
 {
     class EquipmentMenu
@@ -15,19 +22,13 @@ package MenuUI #DDDDDD
         +void SelectItem()
     }
 }
-class Character
-{
-    void AddDataTable(item)
-    //Item,EquipmentはDataTableで管理
-}
-EquipmentMenu - Stats.Equipmentclass
-EquipmentMenu -up- Character
+
 package Stats #DDDDDD
 {
     struct FCharacterStats
     {
-    +int Lavel
-    +float Exp
+        +int Lavel
+        +float Exp
         +float HP
         +float MP
         +float AD
@@ -46,18 +47,15 @@ package Stats #DDDDDD
         class Equipment
         {
             //DataAssetにて管理
+            Texuture Icon
             +FCharacterStats Stats
             +EquipmentComponent
         }
         class Wepon
-        {
-        }
         class Accessory
-        {
-        }
-        class Armor
-        {          
-        }
+        class Head
+        class Upperbody
+        class Lowerbody
         struct Equipmentflag
         {
             +int Equipmentid
@@ -67,12 +65,37 @@ package Stats #DDDDDD
         {
             +void Speciality()
         }
-        EquipmentComponent -up-o Equipment
+        enum EquipmentType{
+            0:Wepon
+            1:Head
+            2:Upperbody
+            3:Lowerbody
+            4:Accessory
+        }
+        class EquipmentComponent
+        {
+            -Character* Owner
+            #Head* head
+            #Upperbody* Upperbody
+            #Lowerbody* lowerbody
+            #Wepon* Wepon
+            #Accessory* accessory0
+            #Accessory* accessory1
+            +void Equip(Equipment equipment ,EquipmentType type)
+            +void UnEquip()
+            +FCharacterStats* EquipmentStats(EquipmentType type)
+        }
         Equipment -up-|> Wepon 
         Equipment -up-|> Accessory
-        Equipment -up-|> Armor
-    }
-
+        Equipment -up-|> Head
+        Equipment -up-|> Upperbody
+        Equipment -up-|> Lowerbody
+        Wepon -up- EquipmentComponent
+        Accessory -up- EquipmentComponent
+        Head -up- EquipmentComponent
+        Upperbody -up- EquipmentComponent
+        Lowerbody -up- EquipmentComponent
+        }
     package "Characterclass" #DDDDDD {
         class StatsComponent
         {
@@ -81,25 +104,17 @@ package Stats #DDDDDD
             +FCharacterStats CurrentStats
             +void CaluculateStats()
             +void ApplyDamage(float dagmage)
+            +void ApplyEffect(StatsEffect effect,float time,float value)
         }
-        class EquipmentComponent
+        enum StatsEffect
         {
-            -Character* Owner
-            #Armor* head
-            #Armor* Upperbody
-            #Armor* lowerbody
-            #Wepon* Wepon
-            #Accessory* accessory0
-            #Accessory* accessory1
-            +void Equip(Equipment equipment ,EquipmentType type)
-            +void UnEquip()
-            +FCharacterStats* EquipmentStats(EquipmentType type)
+            poison = 1
+            burn = 1<<1
+            ...
         }
-
         EquipmentComponent -up-o StatsComponent
         StatsComponent -up-o Character
         FCharacterStats -up-o StatsComponent
-        Equipmentclass -up-o EquipmentComponent 
         FCharacterStats -o Equipment
     } 
 }
@@ -107,19 +122,31 @@ package GamePlayAbility #DDDDDD
 {
     class Ability
     {
-
+        -Character* Owner
+        -animation* Anim
+        -float damage
+        -float cost
+        +void ExeAbility()
+    }
+    struct Abilityflag
+    {
+        +int Abilityid
+        +FString AbilityTag
     }
 }
-
-GamePlayAbility -left- Character
 
 package Item #DDDDDD
 {
     class Item
     {
+        Texture Icon
         //できればデータアセットで管理したい
         +void Speciality()
     }
+    class Tools
+    class Materials
+    class KeyItems
+
     struct itemflag
     {
         +int Itemid
@@ -131,8 +158,21 @@ package Item #DDDDDD
         1:MATERIALS
         2:KEYITEMS
     }
+    Item -up-|> Tools
+    Item -up-|> Materials
+    Item -up-|> KeyItems
 }
+package Enemyclass
+{
+
+}
+package Questclass
+{
+    
+}
+MenuUI -up- Character
 Item -right- Character
-Item -down- MenuUI.ItemMenu
+GamePlayAbility -left- Character
+
 
 @enduml
