@@ -1,80 +1,97 @@
 @startuml
 title class図
-
-class FCharacterStats
-{
-   +int Lavel
-    +float HP
-    +float MP
-    +float AD
-    +float AP
-    +float AR
-    +float MR
-    +float FireRes
-    +float IceRes
-    +float DarkRes
-    +float ELecRes
-    +float HolyRes
-}
-
-
-package "Equipmentclass" #DDDDDD {
-    class Equipment
-    {   
-    +FCharacterStats Stats
-    +void Speciality()
-    }
-    class Wepon
-    {
-        +FCharacterStats Stats
-        +void Speciality()
-    }
-    class Accessory
-    {
-        +FCharacterStats Stats
-        +void Speciality()
-    }
-    class Armor
-    {
-        +FCharacterStats Stats
-        +void Speciality()
-    }
-    Equipment -up-|> Wepon 
-    Equipment -up-|> Accessory
-    Equipment -up-|> Armor
-}
-
-package "Characterclass" #DDDDDD {
-class Character{
-}
-class StatsComponent
-{
-    +FCharacterStats BaseStats
-    +FCharacterStats CurrentStats
-
-}
-class EquipmentComponent
+class EquipmentMenu
 {
     -Character* Owner
-    #Armor* head
-    #Armor* upperbody
-    #Armor* hand
-    #Armor* lowerbody
-    #Armor* foot
-    #Armor* accessory
-    #Wepon* Wepon
-    #Accessory* accessory0
-    #Accessory* accessory1
-    +void Equip(Equipment equipment ,EquipmentType type)
-    +void UnEquip()
-    +void CaluculateStats()
+    -Equipment* Equipment
+    +void SelectEquipment
 }
-EquipmentComponent -up-o Character
-StatsComponent -up-o Character
-FCharacterStats -up-o StatsComponent
-StatsComponent -EquipmentComponent
-Equipmentclass -up-o EquipmentComponent 
-FCharacterStats -o Equipment
+
+class Character
+{
+}
+EquipmentMenu - Stats.Equipmentclass
+EquipmentMenu - Character
+package Stats #DDDDDD
+{
+    struct FCharacterStats
+    {
+    +int Lavel
+    +float Exp
+        +float HP
+        +float MP
+        +float AD
+        +float AP
+        +float AR
+        +float MR
+        +float FireRes
+        +float IceRes
+        +float DarkRes
+        +float ELecRes
+        +float HolyRes
+    }
+
+
+    package "Equipmentclass" #DDDDDD {
+        class Equipment
+        {   
+        +FCharacterStats Stats
+        +void Speciality()
+        }
+        class Wepon
+        {
+            +FCharacterStats Stats
+            +void Speciality()
+        }
+        class Accessory
+        {
+            +FCharacterStats Stats
+            +void Speciality()
+        }
+        class Armor
+        {
+            +FCharacterStats Stats
+            +void Speciality()
+        }
+        Equipment -up-|> Wepon 
+        Equipment -up-|> Accessory
+        Equipment -up-|> Armor
+    }
+
+    package "Characterclass" #DDDDDD {
+        class StatsComponent
+        {
+            +FCharacterStats BaseStats
+            +FCharacterStats MaxStats
+            +FCharacterStats CurrentStats
+            +void CaluculateStats()
+        }
+        class EquipmentComponent
+        {
+            -Character* Owner
+            #Armor* head
+            #Armor* Upperbody
+            #Armor* lowerbody
+            #Wepon* Wepon
+            #Accessory* accessory0
+            #Accessory* accessory1
+            +void Equip(Equipment equipment ,EquipmentType type)
+            +void UnEquip()
+            +FCharacterStats* EquipmentStats(EquipmentType type)
+        }
+        EquipmentComponent -up-o StatsComponent
+        StatsComponent -up-o Character
+        FCharacterStats -up-o StatsComponent
+        Equipmentclass -up-o EquipmentComponent 
+        FCharacterStats -o Equipment
+    } 
+}
+package GamePlayAbility #DDDDDD
+{
+    class Ability
+    {
+        
+    }
 }
 
 @enduml
