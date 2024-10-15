@@ -63,7 +63,7 @@ package Stats #DDDDDD
         }
         class EquipmentComponent
         {
-            +void Speciality()
+            +void SpecialEffect()
         }
         enum EquipmentType{
             0:Wepon
