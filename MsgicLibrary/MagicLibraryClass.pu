@@ -47,15 +47,12 @@ package Stats #DDDDDD
         class Equipment
         {
             //DataAssetにて管理
+            FString Name
             Texuture Icon
             +FCharacterStats Stats
-            +EquipmentComponent
+            +EEquipmentType Type
+            +EquipmentSpecialEffect SpecialEffect
         }
-        class Wepon
-        class Accessory
-        class Head
-        class Upperbody
-        class Lowerbody
         struct Equipmentflag
         {
             +int Equipmentid
@@ -85,16 +82,12 @@ package Stats #DDDDDD
             +void UnEquip()
             +FCharacterStats* EquipmentStats(EquipmentType type)
         }
-        Equipment -up-|> Wepon 
-        Equipment -up-|> Accessory
-        Equipment -up-|> Head
-        Equipment -up-|> Upperbody
-        Equipment -up-|> Lowerbody
-        Wepon -up- EquipmentComponent
-        Accessory -up- EquipmentComponent
-        Head -up- EquipmentComponent
-        Upperbody -up- EquipmentComponent
-        Lowerbody -up- EquipmentComponent
+        class EquipmentSpecialEffect
+        {
+            +void SpecialEffect()
+        }
+        EquipmentSpecialEffect -up-|> Equipment
+        Equipment-up- EquipmentComponent
         }
     package "Characterclass" #DDDDDD {
         class StatsComponent
