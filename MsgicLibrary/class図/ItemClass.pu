@@ -1,0 +1,23 @@
+@startuml
+package Item #DDDDDD
+{
+    class Item
+    {
+        Texture Icon
+        //できればデータアセットで管理したい
+        +void Speciality()
+    }
+
+    struct itemflag
+    {
+        +int Itemid
+        +ItemType itemtype
+        +int Num
+    }
+    enum ItemType{
+        0:TOOLS
+        1:MATERIALS
+        2:KEYITEMS
+    }
+}
+@enduml

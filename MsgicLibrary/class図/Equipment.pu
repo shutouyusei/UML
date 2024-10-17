@@ -1,0 +1,47 @@
+@startuml
+package "Equipmentclass" #DDDDDD {
+        class Equipment
+        {
+            //DataAssetにて管理
+            FString Name
+            Texuture Icon
+            +FCharacterStats Stats
+            +EquipmentSpecialEffect SpecialEffect
+        }
+        struct Equipmentflag
+        {
+            +int Equipmentid
+            +EquipmentType type
+        }
+        class EquipmentComponent
+        {
+            +void SpecialEffect()
+        }
+        enum EquipmentType{
+            0:Wepon
+            1:Head
+            2:Upperbody
+            3:Lowerbody
+            4:Accessory
+        }
+        class EquipmentComponent
+        {
+            -Character* Owner
+            #Equipment* head
+            #Equipment* Upperbody
+            #Equipment* lowerbody
+            #Equipment* Wepon
+            #Equipment* accessory0
+            #Equipment* accessory1
+            +void Equip(Equipment* equipment ,EquipmentType type,bool Accessory)
+            +void UnEquip(EquipmentType type ,bool Accessory)
+            +FCharacterStats* EquipmentStats(EquipmentType type)
+        }
+        class EquipmentSpecialEffect
+        {
+            +void SpecialEffect()
+        }
+        EquipmentSpecialEffect -up-|> Equipment
+        Equipment-up- EquipmentComponent
+        }
+@enduml

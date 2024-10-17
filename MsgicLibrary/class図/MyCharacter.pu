@@ -6,6 +6,7 @@ class MyCharacter
     -Equipmentflag[] Equipments
     -Itemflag[] Items
     -MenuUI Menu
+    +bool IsOpenMenu
     +void SetEquipment()
     +void SetItem()
     +Equipmentflag* GetEquipment()
@@ -25,6 +26,9 @@ class MyCharacter
     -void Ability7()
     -void Ability8()
     -void OpenMenu()
+    +void MenuAction()
+    +void SelectMenu()
+    +void CloseMenu()
 
 }
 
