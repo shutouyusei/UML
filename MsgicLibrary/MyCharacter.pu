@@ -1,0 +1,32 @@
+@startuml
+class MyCharacter
+{
+    -FString[] AbilityTag
+    -MyCharacterStatsComponent StatsComponent
+    -Equipmentflag[] Equipments
+    -Itemflag[] Items
+    -MenuUI Menu
+    +void SetEquipment()
+    +void SetItem()
+    +Equipmentflag* GetEquipment()
+    +Itemflag* GetItem()
+    +void RemoveEquipment(Equipmentflag* Equipment)
+    +void RemoveItem(Itemflag* Item)
+    -void Attack()
+    -void Maggic()
+    -void Intaract()
+    -void Dash()
+    -void Ability1()
+    -void Ability2()
+    -void Ability3()
+    -void Ability4()
+    -void Ability5()
+    -void Ability6()
+    -void Ability7()
+    -void Ability8()
+    -void OpenMenu()
+
+}
+
+@enduml
+
