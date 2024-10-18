@@ -1,0 +1,14 @@
+@startuml
+package GamePlayAbility
+{
+    class MyGamePlayAbility
+    {
+        #Character* Owner
+        #AnimationInstance* anim
+        #float damage
+        #AbilityTage abiliytag
+        +void PlayAnimation()
+        +void ApplayDamage()
+    }
+}
+@endumls
