@@ -10,5 +10,12 @@ package GamePlayAbility
         +void PlayAnimation()
         +void ApplayDamage()
     }
+    enum AbilityFlag
+    {
+        Ability1=0
+        Ability2=(1<<0)
+        Ability3=(1<<1)
+        ...
+    }
 }
 @endumls
